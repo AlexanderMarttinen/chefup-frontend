@@ -1,0 +1,15 @@
+
+.stepContainer {
+    border-bottom: 1px solid #f7e8d5;
+    align-items: flex-start;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    
+}
+.step{
+    margin-top: 0;
+    margin-right: 52px;
+    line-height: 20px;
+}

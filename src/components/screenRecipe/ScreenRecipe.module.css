@@ -1,0 +1,35 @@
+.container{
+    min-height: 100vh;
+    max-width: 650px;
+    flex-direction: column;
+    text-align: left;
+    display: flex;
+    margin:auto;
+    padding:10vh 0;
+}
+.btnSecondaryIcon{
+    background-color: transparent;
+    border: none;
+    padding:16px;
+    border-radius: 8px;  
+    font-family: Lora, sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:16px 0;
+    transition: 200ms ease;
+    cursor: pointer;
+    border: 2px solid #403F2B;
+    
+}
+.btnSecondaryIcon:hover{
+   background-color: #F7E8D5;
+   
+}
+.btnSecondaryIcon img{
+    
+    margin-right:8px;
+    width:16px;
+}

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lora:wght@700&display=swap');
+input{
+    font-family: 'Josefin Sans', sans-serif;
+   
+    padding:12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    margin-top:16px;
+    margin-bottom: 8px;
+
+}

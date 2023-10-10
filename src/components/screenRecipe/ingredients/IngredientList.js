@@ -1,6 +1,6 @@
 import classes from './Ingredient.module.css'
 import Ingredient from './Ingredient';
-const IngredientList = () =>{
+const IngredientList = (props) =>{
 
     const DUMMY_INGREDIENTS = [
         {
@@ -35,8 +35,8 @@ const IngredientList = () =>{
 
     return(
         <div className={classes.stepList}>
-            {DUMMY_INGREDIENTS.map((ingredient,i) => (
-          <Ingredient {...ingredient} id={i} />
+            {props.ingredients.map((ingredient,i) => (
+          <Ingredient {...ingredient} id={i} key={i} />
         ))}
         </div>
     )

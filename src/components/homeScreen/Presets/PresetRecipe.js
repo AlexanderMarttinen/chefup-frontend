@@ -8,7 +8,7 @@ const PresetRecipe = (props) => {
         <img className={classes.presetImg} src={props.src}></img>
       
       <div className={classes.presetContent}>
-        <h3 class="h3">{props.title}</h3>
+        <h3 >{props.title}</h3>
         <p>
           {props.body}
         </p>

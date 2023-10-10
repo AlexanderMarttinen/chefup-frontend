@@ -4,7 +4,7 @@ const Step = (props) => {
   return (
     <div className={classes.stepContainer}>
       <h3 className={classes.step}>{props.id}</h3>
-      <p class="paragraph">{props.body}</p>
+      <p >{props.body}</p>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import classes from './Step.module.css'
 import Step from './Step';
-const StepList = () =>{
+const StepList = (props) =>{
 
     const DUMMY_STEPS = [
       {
@@ -25,8 +25,8 @@ const StepList = () =>{
 
     return(
         <div className={classes.stepList}>
-            {DUMMY_STEPS.map((step,i) => (
-          <Step {...step} id={i+1} />
+            {props.steps.map((step,i) => (
+          <Step {...step} id={i+1} key={i} />
         ))}
         </div>
     )

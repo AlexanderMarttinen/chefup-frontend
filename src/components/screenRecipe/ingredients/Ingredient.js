@@ -9,8 +9,8 @@ const Step = (props) => {
         
       />
       <p  >
-        {props.name}
-        <span >{props.amount}</span>
+        {props.ingredient}
+        <span >{props.amount}</span> 
       </p>
     </label>
   );

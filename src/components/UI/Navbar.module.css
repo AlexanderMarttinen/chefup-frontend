@@ -1,0 +1,41 @@
+.navbarContainer{
+    display: flex;
+    width: 650px;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 24px 0;
+}
+.navItem{
+        
+        align-items: flex-end;
+        flex-wrap: wrap;
+        display: flex;
+        cursor: pointer;
+       
+}
+.navItem:hover img, .navItem:hover p{
+    filter: grayscale(0)!important;
+  opacity: 1!important;
+  color:#403F2B!important
+}
+
+.navItem img{
+    margin-right:16px;
+    filter: grayscale(1);
+    opacity: 0.5;
+    transition: 300ms ease;
+}
+
+.navItemLogo{
+    background-color: red;
+    width:16px;
+    height:16px;
+}
+.navItem p{
+    color:#BFAFA3;
+    transition: 300ms ease;
+}
+
+path {
+    fill: red!important;
+}

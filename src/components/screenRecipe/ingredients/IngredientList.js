@@ -36,7 +36,7 @@ const IngredientList = (props) =>{
     return(
         <div className={classes.stepList}>
             {props.ingredients.map((ingredient,i) => (
-          <Ingredient {...ingredient} id={i} key={i} />
+          <Ingredient amountMultiplier={props.amountMultiplier} {...ingredient} id={i} key={i} />
         ))}
         </div>
     )

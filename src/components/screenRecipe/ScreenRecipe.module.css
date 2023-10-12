@@ -7,7 +7,15 @@
     margin:auto;
     padding:10vh 0;
 }
+.cardTitle{
+    margin-bottom:12px;
+}
+.CardTitleContainer{
+    display: flex;
+    justify-content: flex-end;
+}
 .btnSecondaryIcon{
+    width:fit-content;
     background-color: transparent;
     border: none;
     padding:16px;
@@ -32,4 +40,31 @@
     
     margin-right:8px;
     width:16px;
+}
+
+.ingredientsActionContainer{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    line-height: 20px;
+    margin-bottom:12px;
+   
+}
+.ingredientsActionContainer p,h3{
+    font-size: 1.2rem;
+    align-self: center;
+    margin-right:12px
+}
+.ingredientsActionContainer button{
+    line-height: 0;
+    border-radius: 8px;
+   border:none;
+   background-color: #fbf4ea;
+    padding: 12px;
+    margin-right:12px;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+.ingredientsActionContainer button:hover{
+    background-color: #F7E8D5;
 }

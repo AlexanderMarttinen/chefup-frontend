@@ -12,7 +12,13 @@
 }
 .CardTitleContainer{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+ 
+}
+.actionContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .btnSecondaryIcon{
     width:fit-content;
@@ -36,11 +42,36 @@
    background-color: #F7E8D5;
    
 }
-.btnSecondaryIcon img{
+.btnSecondaryIcon img, .btnYellowIcon img{
     
     margin-right:8px;
     width:16px;
 }
+
+.btnYellowIcon{
+    width:fit-content;
+    height:fit-content;
+    background-color: #F1C737;
+    border: none;
+    padding:16px;
+    border-radius: 8px;  
+    font-family: Lora, sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:0;
+    transition: 200ms ease;
+    cursor: pointer;
+    border: none;
+}
+.btnYellowIcon:hover{
+    background-color: #DAB228;
+    
+ }
+
+
 
 .ingredientsActionContainer{
     display: flex;

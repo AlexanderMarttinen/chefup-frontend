@@ -27,7 +27,7 @@ const NavBar = (props) =>{
                 <p>Home</p>
             </div>
 
-            <div  onClick={(event) => navClickHandler('saved',event.target.value)} className={props.active==='saved' ? `active ${classes.navItem}` : classes.navItem}>
+            <div  onClick={(event) => navClickHandler('saved',event.target.value)} className={`${props.savedClassesProps}  ${classes.navItem}`    }>
                 <img src={ImgSaved} />
                 <p>Saved Recipes</p>
             </div>

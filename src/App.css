@@ -116,3 +116,17 @@ p{
 .active p{
   color:#403F2B!important
 }
+.bump {
+  animation: bump 300ms ease-out;
+}
+
+@keyframes bump {
+  from{transform:scale(1)}
+  60%{transform:scale(1.1)}
+  to{transform:scale(1)}
+}
+@-webkit-keyframes bump {
+  from{-webkit-transform:scale(1)}
+  60%{-webkit-transform:scale(1.1)}
+  to{-webkit-transform:scale(1)}
+}

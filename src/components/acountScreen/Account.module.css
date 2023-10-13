@@ -1,0 +1,41 @@
+.accountContainer{
+    max-width: 450px;
+}
+.accountContainer span{
+    color:#6f685e;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+.formContainer{
+  
+    margin-top: 36px;
+    text-align: left;
+    flex-basis: max-content;
+    display: flex;
+    flex-direction: column;
+}
+.formContainer input{
+    margin-top: 8px;
+    margin-bottom:24px;
+   
+}
+.formContainer button{
+    width: 100%;
+}
+.formContainer label{
+    color: #6f685e;
+    font-family: Josefin Sans, sans-serif;
+}
+
+
+.divider p{
+    background-color: #fbf4ea;
+    padding:0 12px;
+    color: #BFAFA3;
+    font-size: 12px;
+}
+.divider{
+    border-bottom: 1px solid #BFAFA3;
+   height: 12px;
+}

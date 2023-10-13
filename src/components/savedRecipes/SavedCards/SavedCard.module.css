@@ -1,0 +1,21 @@
+.savedCardContainer{
+    background:white;
+    text-align: left;
+    max-width: 100%;
+    padding:12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 200ms ease;
+}
+.savedCardContainer:hover{
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 3px 8px;
+    transform: scale(1.002);
+}
+
+.savedCardContainer h4{
+    color:#403F2B;
+    font-size: 20px;
+    font-family: Lora, sans-serif;
+    margin: 0 0 12px 0;
+    line-height: 24px;
+}

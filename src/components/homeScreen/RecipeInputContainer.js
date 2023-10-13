@@ -186,7 +186,7 @@ const RecipeInputContainer = (props) => {
           />
         </Modal>
       )}
-      <div className={classes["usp-container"]}>
+      {/* <div className={classes["usp-container"]}>
         <div className={classes["usp-icon-container"]}>
           <img
             width={20}
@@ -195,9 +195,9 @@ const RecipeInputContainer = (props) => {
           ></img>
         </div>
         <p className={classes["paragraph"]}>
-          Cut through the BS, and get <i>just</i> the recipe from websites
+          Leverage technology to craft the perfect cookie recipe
         </p>
-      </div>
+      </div> */}
       <Input
         onChange={handleRecipeSearchTermChange}
         type="text"

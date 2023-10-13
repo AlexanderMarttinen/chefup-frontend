@@ -1,0 +1,6 @@
+.savedCardList{
+    margin:24px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+}

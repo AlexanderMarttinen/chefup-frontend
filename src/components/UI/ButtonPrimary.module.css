@@ -1,0 +1,25 @@
+.btnPrimary{
+    background-color: #4F6C4E;
+    color:white;
+    border: none;
+    padding:12px 12px;
+    border-radius: 8px;
+    
+    font-family: Lora, sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:16px 0;
+    transition: 200ms ease;
+    cursor: pointer;
+    
+}
+.btnPrimary:hover{
+    background-color: #435D42;
+}
+.btnPrimary img{
+    filter: brightness(100);
+    margin-right: 8px;
+}

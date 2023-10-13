@@ -27,14 +27,14 @@ const NavBar = (props) =>{
                 <p>Home</p>
             </div>
 
-            <div  onClick={(event) => navClickHandler('saved',event.target.value)} className={`${props.savedClassesProps}  ${classes.navItem}`    }>
+            <div  onClick={(event) => navClickHandler('saved',event.target.value)} className={props.active==='saved' ? `active ${classes.navItem}` : classes.navItem}    >
                 <img src={ImgSaved} />
                 <p>Saved Recipes</p>
             </div>
 
             <div  onClick={(event) => navClickHandler('account',event.target.value)} className={props.active==='account' ? `active ${classes.navItem}` : classes.navItem}>
                 <img src={ImgAccount} />
-                <p>My Account</p>
+                <p>{props.userSignedIn ? 'Log out' : 'Login/Sign Up'}</p>
             </div>
         </div>
     )

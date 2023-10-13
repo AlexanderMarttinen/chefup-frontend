@@ -129,33 +129,77 @@ const ScreenRecipe = (props) => {
       },
     ],
   });
+
   let [servesAmount, setServesAmount] = useState(parseInt(recipeData.serves));
   const [savedIsHighlighted, setSavedIsHighlighted] = useState(false);
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const [useInfo, setUserInfo] = useState({});
   const [recipeIsSaved, setRecipeIsSaved] = useState(false);
   const savedClasses = ` ${savedIsHighlighted ? "bump" : ""}`;
+  const [userIsSignedIn, setUserIsSignedIn] = useState(false);
 
   let [servesAmountMultiplier, setServesAmountMultiplier] = useState(
     parseInt(recipeData.serves)
   );
-  const handleBackClick = () => {
-    props.goBack();
+
+  const getSignedInState = async () => {
+    console.log("checking logged in");
+    const { data, error } = await supabase.auth.getSession();
+    if (data.session !== null) {
+      setUserIsSignedIn(true);
+      setUserInfo(data.session.user);
+    }
+  };
+  const fetchRecipes = async () => {
+    const { data, error } = await supabase.from("saved").select();
+    if (JSON.stringify(data) !== JSON.stringify(savedRecipes)) {
+      console.log("strings are not equal");
+      setSavedRecipes(data);
+    }
+  };
+
+  const deleteFromSaved = async () => {
+    const { error } = await supabase
+      .from("saved")
+      .delete()
+      .eq("recipe_id", recipeData.id);
+  };
+  const addToSaved = async () => {
+    const { error } = await supabase
+      .from("saved")
+      .insert({
+        id: recipeData.id,
+        user_id: useInfo.email,
+        name: recipeData.name,
+        description: recipeData.description,
+      });
   };
   const handleSaveClick = () => {
     setSavedIsHighlighted(true);
-    let localStorageArray = [];
-    localStorageArray = JSON.parse(localStorage.getItem("savedRecipes"));
-    if(recipeIsSaved){
-      const index = localStorageArray.indexOf(recipeData.id);
-      console.log(index);
-      localStorageArray.splice(index,1); 
-      localStorage.setItem('savedRecipes', JSON.stringify(localStorageArray));
-    }else{
-      localStorageArray.push(recipeData.id);
-      localStorage.setItem('savedRecipes', JSON.stringify(localStorageArray));
+    if (userIsSignedIn) {
+      if (recipeIsSaved) {
+        //REMOVE THE RECIPE FROM THE SAVED RECIPE SUPABASE TABLE
+        deleteFromSaved();
+      } else {
+        //ADD THE RECIPE TO SAVED RECIPE SUPABASE TABLE
+        addToSaved();
+      }
+    } else {
+      let localStorageArray = [];
+      localStorageArray = JSON.parse(localStorage.getItem("savedRecipes"));
+      if (recipeIsSaved) {
+        const index = localStorageArray.indexOf(recipeData.id);
+        console.log(index);
+        localStorageArray.splice(index, 1);
+        localStorage.setItem("savedRecipes", JSON.stringify(localStorageArray));
+      } else {
+        localStorageArray.push(recipeData.id);
+        localStorage.setItem("savedRecipes", JSON.stringify(localStorageArray));
+      }
     }
+
     setRecipeIsSaved(!recipeIsSaved);
-   
-   
+
     const timer = setTimeout(() => {
       setSavedIsHighlighted(false);
     }, 300);
@@ -166,7 +210,6 @@ const ScreenRecipe = (props) => {
   };
 
   async function getRecipe() {
-    console.log("getting recipe");
     const { data, error } = await supabase
       .from("recipes")
       .select()
@@ -174,18 +217,39 @@ const ScreenRecipe = (props) => {
     setRecipeData(data[0]);
   }
 
+  function getSavedState() {
+    if (userIsSignedIn) {
+      fetchRecipes();
+      console.log(recipeData.id);
+      console.log(savedRecipes);
+      if (savedRecipes.find((recipe) => recipe.recipe_id === recipeData.id)) {
+        setRecipeIsSaved(true);
+      }
+    } else {
+      const localStorageArray = JSON.parse(
+        localStorage.getItem("savedRecipes")
+      );
+
+      console.log(localStorageArray.indexOf(recipeData.id));
+      if (parseInt(localStorageArray.indexOf(recipeData.id)) !== -1) {
+        setRecipeIsSaved(true);
+      }
+    }
+  }
+
   useEffect(() => {
     const savedRecipesStorage = localStorage.getItem("savedRecipes");
-
-     if (savedRecipesStorage === null) {
-      localStorage.setItem('savedRecipes','[]')
-    }
-
-    setServesAmountMultiplier(servesAmount / recipeData.serves);
     if (recipeData.name === "") {
       getRecipe();
     }
-  }, []);
+    getSignedInState();
+    getSavedState();
+    if (savedRecipesStorage === null) {
+      localStorage.setItem("savedRecipes", "[]");
+    }
+
+    setServesAmountMultiplier(servesAmount / recipeData.serves);
+  }, [recipeData, savedRecipes]);
 
   const handleUpClick = () => {
     setServesAmount(servesAmount + 1);
@@ -196,7 +260,7 @@ const ScreenRecipe = (props) => {
 
   return (
     <>
-      <NavBar savedClassesProps={savedClasses} />
+      <NavBar savedClassesProps={savedClasses} userSignedIn={userIsSignedIn} />
       <div className={classes.container}>
         <div className={classes.actionContainer}>
           {/* <button onClick={handleBackClick} className={classes.btnSecondaryIcon}>
@@ -208,8 +272,8 @@ const ScreenRecipe = (props) => {
             <p>{recipeData.description}</p>
           </div>
           <button onClick={handleSaveClick} className={classes.btnYellowIcon}>
-            <img src={recipeIsSaved ?  ImgSavedFilled: ImgSaved } />
-            {recipeIsSaved ?  "Recipe Saved" : "Save Recipe" }
+            <img src={recipeIsSaved ? ImgSavedFilled : ImgSaved} />
+            {recipeIsSaved ? "Recipe Saved" : "Save Recipe"}
           </button>
         </div>
 

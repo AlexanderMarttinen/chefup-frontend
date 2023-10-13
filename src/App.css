@@ -12,11 +12,11 @@
   justify-content: center;
 
 }
-.home-container{
+.home-container, .container{
   height: 100vh;
-  max-width: 650px;
+  width: 650px;
   flex-direction: column;
-  justify-content: center;
+ 
   display: flex;
   margin:auto;
 }

@@ -1,0 +1,35 @@
+.notificationContainer{
+    display: flex;
+    flex-direction: row;
+    background-color: #FED6A8;
+    justify-content: space-between;
+    padding: 8px 0 8px 12px;
+    align-items: center;
+    border-radius: 8px;
+}
+.notificationContainer p{
+    color:#AD5918;
+}
+
+.btnNotificationPrimary{
+    background-color: #703815;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+
+}
+.btnNotificationPrimary:hover{
+    background-color: #643214;
+}
+
+.btnNotificationClose{
+    background-color:transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.btnNotificationClose:hover{
+    background-color: #eac498;
+}

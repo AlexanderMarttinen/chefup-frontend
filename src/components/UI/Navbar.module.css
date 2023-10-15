@@ -27,7 +27,7 @@
 }
 
 .navItemLogo{
-    background-color: red;
+  
     width:16px;
     height:16px;
 }
@@ -36,6 +36,24 @@
     transition: 300ms ease;
 }
 
-path {
-    fill: red!important;
+@media only screen and (max-width: 600px) {
+    .navbarContainer{
+        width:100%!important;
+        padding: 12px 32px;
+        box-sizing: border-box;
+    }
+    .navItem{
+        flex-direction: column;
+        align-items: center;
+    }
+    .navItem p{
+        font-size: 12px;
+    }
+    .navItem img{
+        margin-right:0px;
+        margin-bottom: 4px;
+        height:18px;
+        
+    }
+
 }

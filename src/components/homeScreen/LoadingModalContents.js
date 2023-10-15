@@ -15,12 +15,12 @@ const LoadingModalContents = (props) =>{
           </div>
 
           <div className= {`loadingStage ${props.findIngredients.class}`} >
-            <img src={ImgCheckFilled} width={14} />
+            <img src={props.findRecipe.class==='stageFound' ? ImgCheckFilled : ImgLoading }  width={14} />
             <p className={props.findIngredients.class} >{props.findIngredients.message}</p>
           </div>
 
           <div className= {`loadingStage ${props.findSteps.class}`} >
-            <img src={ImgCheckFilled} width={14} />
+            <img src={props.findRecipe.class==='stageFound' ? ImgCheckFilled : ImgLoading } width={14} />
             <p>{props.findSteps.message}</p>
           </div>
         </div>

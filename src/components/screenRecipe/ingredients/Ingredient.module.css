@@ -13,3 +13,14 @@ p span{
 .step{
     cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+    .step{
+        display: flex;
+        align-items: flex-start;
+    }
+    input{
+        margin-top: 3px;
+    }
+
+}

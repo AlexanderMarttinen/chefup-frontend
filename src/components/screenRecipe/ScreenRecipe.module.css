@@ -99,3 +99,18 @@
 .ingredientsActionContainer button:hover{
     background-color: #F7E8D5;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .btnYellowIcon{
+        padding:12px 8px;
+    }
+    .btnYellowIcon img{
+        width:12px;
+    }
+    .container{
+        padding:0 8px;
+        width:100%;
+    }
+
+}

@@ -13,3 +13,15 @@
     margin-right: 52px;
     line-height: 20px;
 }
+
+@media only screen and (max-width: 600px) {
+    .step{
+      
+        margin-right: 24px;
+       
+    }
+    p{
+        line-height: 24px;
+    }
+
+}

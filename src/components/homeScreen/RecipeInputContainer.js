@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import OpenAI from "openai";
 import Modal from "../UI/Modal";
+import { createClient } from "@supabase/supabase-js";
 
 import LoadingModalContents from "./LoadingModalContents";
 const RecipeInputContainer = (props) => {
@@ -29,13 +30,32 @@ const RecipeInputContainer = (props) => {
   useEffect(() => {
     resultRef.current = result;
   }, [result]);
+  const supabase = createClient(
+    "https://xrduaykrzrmjuueaxmul.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZHVheWtyenJtanV1ZWF4bXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMjA2MjUsImV4cCI6MjAxMjY5NjYyNX0.Hfms-KUZhwsONOUO5YVyskGQ2m9T9ZzZkm-e9jjWE0I"
+  );
 
   const handleRecipe = (data) => {
     setIsLoading(false);
+    writeRecipeToDatabase(data)
     props.handleRecipe(data);
     // return parsedRecipe
   };
 
+  
+  const writeRecipeToDatabase = async(data) =>{
+    const { error } = await supabase
+      .from("recipes")
+      .insert({
+        name: data.name,
+        description:data.description,
+        serves:data.serves,
+        cook_time:data.cooktime,
+        ingredients:data.ingredients,
+        steps:data.steps
+      });
+  };
+  
   // SET UP OPEN AI
   const openai = new OpenAI({
     apiKey: "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",
@@ -61,42 +81,7 @@ const RecipeInputContainer = (props) => {
   const FetchRecipe = async (SEARCH_TERM) => {
     if (SEARCH_TERM !== "") {
       try {
-        // const source = axios.post(
-        //   "https://api.openai.com/v1/chat/completions",
-        //   {
-        //     messages: [
-        //       {
-        //         role: "user",
-        //         content: `You are a machine that is built to respond to prompts using strictly JSON format. No additional text is to be included in your response. I am going to provide you with a cooking instructions. You need to reply with a JSON object using the following schema:
-
-        //         {
-        //           name:"the title of the recipe formatted as a String",
-        //           description:"a brief one sentence description of the recipe formatted as a string",
-        //           serves:"the mode number of servings that this recipe will provide formatted as an int",
-        //           cooktime:"the estimated total time in minutes for this recipe to be cooked formatted as an int",
-        //           ingredients:[{'ingedient':'name of ingredient 1 , 'amount': 'quantity of ingredient 1 for the recipe'},{'ingedient':'name of ingredient 2 , 'amount': 'quantity of ingredient 2 for the recipe' }],
-        //           steps:[{body:"a very brief and concise explanation for step 1 of the recipe"},{body:"a very brief and concise explanation for step 2 of the recipe"}]
-        //           }
-        //     note: the steps and ingredients properties, will be an array that covers all necessary ingredients and instructions for the recipe.
-
-        //     Now provide me a JSON object for ${SEARCH_TERM}`,
-        //       },
-        //     ],
-        //     model: "gpt-3.5-turbo",
-        //     max_tokens: 600,
-        //     n: 1,
-        //     temperature: 0.55,
-        //     stream:true,
-
-        //   },
-        //   { responseType: "stream" },
-        //   {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       Authorization: `Bearer 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`,
-        //     },
-        //   }
-        // );
+    
 
         const response = await fetch("http://localhost:2000/aiCompletion", {
           method: "post",
@@ -169,6 +154,7 @@ const RecipeInputContainer = (props) => {
         console.log(resultRef.current);
      const jsonResponse = JSON.parse(resultRef.current)
      handleRecipe(jsonResponse)
+     
       } catch (err) {
         console.log(err);
       }

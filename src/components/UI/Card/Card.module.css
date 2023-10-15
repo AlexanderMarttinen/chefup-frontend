@@ -3,3 +3,9 @@
     border-radius: 8px;
     padding: 12px 32px;
 }
+@media only screen and (max-width: 600px) {
+    .cardContainer{
+        padding: 8px 12px;
+    }
+
+}

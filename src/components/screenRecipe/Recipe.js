@@ -162,7 +162,7 @@ const ScreenRecipe = (props) => {
     const { error } = await supabase
       .from("saved")
       .delete()
-      .eq("recipe_id", recipeData.id);
+      .eq("id", recipeData.id);
   };
   const addToSaved = async () => {
     const { error } = await supabase
@@ -222,7 +222,7 @@ const ScreenRecipe = (props) => {
       fetchRecipes();
       console.log(recipeData.id);
       console.log(savedRecipes);
-      if (savedRecipes.find((recipe) => recipe.recipe_id === recipeData.id)) {
+      if (savedRecipes.find((recipe) => recipe.id === recipeData.id)) {
         setRecipeIsSaved(true);
       }
     } else {

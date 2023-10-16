@@ -24,7 +24,7 @@ const Step = (props) => {
         
       />
       <p  >
-        {props.name}
+        {props.ingredient}
         <span >{newAmount}</span> 
       </p>
     </label>

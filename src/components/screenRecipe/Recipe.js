@@ -215,6 +215,7 @@ const ScreenRecipe = (props) => {
       .select()
       .eq("id", `${URLParameters.id}`);
     setRecipeData(data[0]);
+    setServesAmount(data[0].serves)
   }
 
   function getSavedState() {
@@ -249,7 +250,7 @@ const ScreenRecipe = (props) => {
     }
 
     setServesAmountMultiplier(servesAmount / recipeData.serves);
-  }, [recipeData, savedRecipes]);
+  }, [recipeData, savedRecipes,servesAmount]);
 
   const handleUpClick = () => {
     setServesAmount(servesAmount + 1);

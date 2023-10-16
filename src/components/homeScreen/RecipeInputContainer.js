@@ -7,7 +7,7 @@ import axios from "axios";
 import OpenAI from "openai";
 import Modal from "../UI/Modal";
 import { createClient } from "@supabase/supabase-js";
-
+import { useNavigate } from "react-router-dom";
 import LoadingModalContents from "./LoadingModalContents";
 const RecipeInputContainer = (props) => {
   //DECLARE STATE
@@ -34,26 +34,113 @@ const RecipeInputContainer = (props) => {
     "https://xrduaykrzrmjuueaxmul.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZHVheWtyenJtanV1ZWF4bXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMjA2MjUsImV4cCI6MjAxMjY5NjYyNX0.Hfms-KUZhwsONOUO5YVyskGQ2m9T9ZzZkm-e9jjWE0I"
   );
+  const navigate = useNavigate();
+
+  const TEST_DATA = {
+    "name":"Pork Shoulder Roast",
+    "description":"A tender and flavorful pork shoulder roast that is perfect for a hearty meal.",
+    "serves":8,
+    "cooktime":240,
+    "ingredients":[
+       {
+          "ingredient":"boneless pork shoulder",
+          "amount":"4 pounds"
+       },
+       {
+          "ingredient":"garlic cloves",
+          "amount":"6"
+       },
+       {
+          "ingredient":"olive oil",
+          "amount":"2 tablespoons"
+       },
+       {
+          "ingredient":"salt",
+          "amount":"2 teaspoons"
+       },
+       {
+          "ingredient":"ground black pepper",
+          "amount":"1 teaspoon"
+       },
+       {
+          "ingredient":"dried thyme",
+          "amount":"1 teaspoon"
+       },
+       {
+          "ingredient":"onion",
+          "amount":"1 large, sliced"
+       },
+       {
+          "ingredient":"chicken broth",
+          "amount":"1 cup"
+       }
+    ],
+    "steps":[
+       {
+          "body":"Preheat the oven to 325°F (165°C)."
+       },
+       {
+          "body":"Make small incisions in the pork shoulder and insert the garlic cloves."
+       },
+       {
+          "body":"Rub the pork shoulder with olive oil and season with salt, black pepper, and dried thyme."
+       },
+       {
+          "body":"Place the sliced onion at the bottom of a roasting pan."
+       },
+       {
+          "body":"Put the pork shoulder on top of the onion and pour the chicken broth into the pan."
+       },
+       {
+          "body":"Cover the pan with foil and roast for 3 hours."
+       },
+       {
+          "body":"Remove the foil and continue roasting for another hour, or until the pork shoulder is tender and the internal temperature reaches 145°F (63°C)."
+       },
+       {
+          "body":"Let the roast rest for 10 minutes before slicing and serving."
+       }
+    ]
+ }
 
   const handleRecipe = (data) => {
     setIsLoading(false);
-    writeRecipeToDatabase(data)
-    props.handleRecipe(data);
+    //writeRecipeToDatabase(data)
+    navigateToRecipe(data)
+    //props.handleRecipe(data);
     // return parsedRecipe
   };
-
+ // navigateToRecipe(TEST_DATA)
+  const navigateToRecipe = async (recipeData) => {
+    const { error } = await supabase
+    .from("recipes")
+    .insert({
+      name: recipeData.name,
+      description:recipeData.description,
+      serves:recipeData.serves,
+      cook_time:recipeData.cooktime,
+      ingredients:recipeData.ingredients,
+      steps:recipeData.steps
+    });
+    const { data, errorFetching } = await supabase
+    .from('recipes')
+    .select()
+    .eq("name", recipeData.name);
+    console.log(data);
+   navigate(`/recipe/${data[0].id}`)
+  }
   
   const writeRecipeToDatabase = async(data) =>{
-    const { error } = await supabase
-      .from("recipes")
-      .insert({
-        name: data.name,
-        description:data.description,
-        serves:data.serves,
-        cook_time:data.cooktime,
-        ingredients:data.ingredients,
-        steps:data.steps
-      });
+    // const { error } = await supabase
+    // .from("recipes")
+    // .insert({
+    //   name: data.name,
+    //   description:data.description,
+    //   serves:data.serves,
+    //   cook_time:data.cooktime,
+    //   ingredients:data.ingredients,
+    //   steps:data.steps
+    // });
   };
   
   // SET UP OPEN AI
@@ -83,26 +170,14 @@ const RecipeInputContainer = (props) => {
       try {
     
 
-        const response = await fetch("http://localhost:2000/aiCompletion", {
+        const response = await fetch("https://recipe-api-edge-functions.netlify.app/createRecipe", {
           method: "post",
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
+          // headers: {
+          //   Accept: "application/json, text/plain, */*",
+          //   "Content-Type": "application/json",
+          // },
           body: JSON.stringify({
-            userPrompt: `You are a machine that is built to respond to prompts using strictly JSON format. No additional text is to be included in your response. You need to reply with a JSON object using the following schema:
-
-                 {
-                   name:"the title of the recipe formatted as a String",
-                   description:"a brief one sentence description of the recipe formatted as a string",
-                   serves:"the mode number of servings that this recipe will provide formatted as an int",
-                   cooktime:"the estimated total time in minutes for this recipe to be cooked formatted as an int",
-                   ingredients:[{'ingedient':'name of ingredient 1 , 'amount': 'quantity of ingredient 1 for the recipe'},{'ingedient':'name of ingredient 2 , 'amount': 'quantity of ingredient 2 for the recipe' }],
-                   steps:[{body:"a very brief and concise explanation for step 1 of the recipe"},{body:"a very brief and concise explanation for step 2 of the recipe"}]
-                   }
-             note: the steps and ingredients properties, will be an array that covers all necessary ingredients and instructions for the recipe.
-            
-             Now provide me a Recipe in the form of a JSON object for how I can make ${SEARCH_TERM}`,
+            recipe: `${SEARCH_TERM}`,
           }),
         });
         const reader = response.body.getReader();
@@ -128,7 +203,7 @@ const RecipeInputContainer = (props) => {
                 class: "stageFound",
               });
               setStageIngredientsComplete({
-                message: "Finding Ingredients",
+                message: "Listing Ingredients",
                 class: "stageFinding",
               });
             }
@@ -138,11 +213,11 @@ const RecipeInputContainer = (props) => {
             if (decodedChunk.match("body").length > 0) {
               console.log("FOUND body");
               setStageIngredientsComplete({
-                message: "Found Ingredients",
+                message: "Finished Listing Ingredients",
                 class: "stageFound",
               });
               setStageStepsComplete({
-                message: "Finding instructions",
+                message: "Writing instructions",
                 class: "stageFinding",
               });
             }
@@ -150,10 +225,17 @@ const RecipeInputContainer = (props) => {
 
           //Catch when working on steps
         }
-        console.log("COMPLETED");
-        console.log(resultRef.current);
-     const jsonResponse = JSON.parse(resultRef.current)
-     handleRecipe(jsonResponse)
+
+        try{
+          console.log("COMPLETED");
+          console.log(resultRef.current);
+          const jsonResponse = JSON.parse(resultRef.current)
+          handleRecipe(jsonResponse)
+        }catch(error){
+          console.log(error)
+          alert(error);
+        }
+     
      
       } catch (err) {
         console.log(err);

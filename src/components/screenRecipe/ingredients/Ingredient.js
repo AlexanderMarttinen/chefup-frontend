@@ -5,11 +5,22 @@ const Step = (props) => {
 
   let newAmount = 0;
   if (props.amount.match('/')){
-    const integers =  props.amount.match(/\d+/g);
+    try{
+      const integers =  props.amount.match(/\d+/g);
     newAmount =  `${parseInt(integers[0])*parseFloat(props.amountMultiplier)} ${props.amount.slice(integers[0].length)}`;
+    }catch(err){
+      const integers =  props.amount.match(/\d+/g);
+     newAmount =  `${props.amount}`;
+    }
   }else{
-    const integers =  props.amount.match(/\d+/g);
+    try{
+      const integers =  props.amount.match(/\d+/g);
     newAmount =  `${parseInt(integers[0])*parseFloat(props.amountMultiplier)} ${props.amount.slice(integers[0].length)}`;
+    }catch(err){
+      const integers =  props.amount.match(/\d+/g);
+     newAmount =  `${props.amount}`;
+    }
+    
   }
 
   

@@ -244,10 +244,11 @@ const ScreenRecipe = (props) => {
       getRecipe();
     }
     getSignedInState();
-    getSavedState();
     if (savedRecipesStorage === null) {
       localStorage.setItem("savedRecipes", "[]");
     }
+    getSavedState();
+    
 
     setServesAmountMultiplier(servesAmount / recipeData.serves);
   }, [recipeData, savedRecipes,servesAmount]);
@@ -311,3 +312,5 @@ const ScreenRecipe = (props) => {
 };
 
 export default ScreenRecipe;
+
+

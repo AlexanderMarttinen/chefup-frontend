@@ -1,28 +1,29 @@
 import RecipeInputContainer from "./RecipeInputContainer";
-import PresetList from "./Presets/PresetList";
 import SavedCardList from "../savedRecipes/SavedCards/SavedCardList";
-import React,{useState,useEffect} from "react";
-import { createClient } from "@supabase/supabase-js";
-const HomeScreen = (props) => {
+import React, { useState, useEffect, useContext } from "react";
+import { supabase } from "../../utils/supabase";
+import UserContext from "../../store/user-context";
 
-    const [savedRecipes,setSavedRecipes] = useState([]);
-const supabase = createClient(
-    "https://xrduaykrzrmjuueaxmul.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZHVheWtyenJtanV1ZWF4bXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMjA2MjUsImV4cCI6MjAxMjY5NjYyNX0.Hfms-KUZhwsONOUO5YVyskGQ2m9T9ZzZkm-e9jjWE0I"
-  );
-    
+const HomeScreen = (props) => {
+  const [savedRecipes, setSavedRecipes] = useState([]);
+
+  const userCtx = useContext(UserContext);
+
+ 
+
   async function getRecipes() {
+    const { data, error } = await supabase.from("recipes").select();
+
+    setSavedRecipes(data);
+  }
+
+  useEffect(() => {
+    userCtx.setActiveTab("home");
+
    
-      const { data, error } = await supabase
-        .from("recipes")
-        .select()
-        
-      setSavedRecipes(data);
-    }
-  
-    useEffect(() => {
-        getRecipes()
-      }, []);
+    console.log(userCtx)
+    getRecipes();
+  }, []);
 
   const pull_data = (data) => {
     props.pull_data(data);

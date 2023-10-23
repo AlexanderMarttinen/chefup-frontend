@@ -18,6 +18,7 @@ const Login = (props) => {
         <span onClick={props.actionToggle}>Create one now</span>
       </p>
       <form
+        id="form-login"
         className={classes.formContainer}
         onSubmit={(event) => {
           event.preventDefault();
@@ -41,7 +42,7 @@ const Login = (props) => {
           placeholder="Enter your Password"
           id="password"
         />
-        <ButtonPrimary text="Login" />
+        <ButtonPrimary text="Login"  type="submit" form="form1" />
       </form>
     </div>
   );

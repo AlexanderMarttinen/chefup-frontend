@@ -2,7 +2,7 @@ import React from "react";
 import classes from './Account.module.css'
 import ButtonPrimary from '../UI/ButtonPrimary'
 const Logout = (props) => {
-    console.log(props.user)
+   
   return (
     
     <div className={`container ${classes.accountContainer}`}>

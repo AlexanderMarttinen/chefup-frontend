@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState,  useContext } from "react";
 import { supabase } from "../../utils/supabase";
 import UserContext from "../../store/user-context";
 import Logout from "./Logout";
@@ -7,11 +7,8 @@ import Login from "./Login";
 import Signup from "./Signup";
 const Account = (props) => {
   const [userLoginToggle, setUserLoginToggle] = useState(false);
-  const [userIsSignedIn, setUserIsSignedIn] = useState(false);
   const userCtx = useContext(UserContext);
-  useEffect(() => {
-    userCtx.setActiveTab("account");
-  }, [userIsSignedIn]);
+
   async function createUser(email,password) {
     const { data, error } = await supabase.auth.signUp({
       email: email,
@@ -21,14 +18,18 @@ const Account = (props) => {
   async function logoutUserHandler(event) {
     event.preventDefault();
     const { error } = await supabase.auth.signOut();
+    userCtx.setSignedInUser(null);
   }
   async function loginUser(email,password) {
+   
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password
     });
+
     if (error === null) {
-      setUserIsSignedIn(true);
+    
+      userCtx.setSignedInUser(data.session.user);
     }
   }
   const userActionToggleHandler = () => {

@@ -42,7 +42,7 @@ const Login = (props) => {
           placeholder="Enter your Password"
           id="password"
         />
-        <ButtonPrimary text="Login"  type="submit" form="form1" />
+        <ButtonPrimary text="Login" type="submit" form="form-login" />
       </form>
     </div>
   );

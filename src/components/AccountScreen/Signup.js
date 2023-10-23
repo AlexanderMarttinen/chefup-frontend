@@ -1,46 +1,47 @@
 import React from "react";
-import classes from './Account.module.css'
+import classes from "./Account.module.css";
 import ButtonPrimary from "../UI/ButtonPrimary";
 import { useRef } from "react";
 const Signup = (props) => {
-    const signupEmailRef = useRef(null);
-    const signupPasswordRef = useRef(null);
-    const signupPasswordConfirmRef = useRef(null);
-    const handleSignup = (event) =>{
-        event.preventDefault();
-    
-        if (
-          signupPasswordRef.current.value !== signupPasswordConfirmRef.current.value
-        ) {
-          alert("Passwords must match");
-          return;
-        }
-        if (
-          signupEmailRef.current.value
-            .toLowerCase()
-            .match(
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            ) === false
-        ) {
-          alert("Please enter a valid email address");
-          return;
-        }
-        props.signup(signupEmailRef.current.value,signupPasswordRef.current.value)
-       }
-      
-  return (
-  
+  const signupEmailRef = useRef(null);
+  const signupPasswordRef = useRef(null);
+  const signupPasswordConfirmRef = useRef(null);
+  const handleSignup = (event) => {
+    event.preventDefault();
 
+    if (
+      signupPasswordRef.current.value !== signupPasswordConfirmRef.current.value
+    ) {
+      alert("Passwords must match");
+      return;
+    }
+    if (
+      signupEmailRef.current.value
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        ) === false
+    ) {
+      alert("Please enter a valid email address");
+      return;
+    }
+    props.signup(signupEmailRef.current.value, signupPasswordRef.current.value);
+  };
+
+  return (
     <div className={`container ${classes.accountContainer}`}>
       <h1 style={{ textAlign: "left" }} className="h1-title">
         Sign up
       </h1>
       <p style={{ textAlign: "left" }}>
-        
         Already have an account?
         <span onClick={props.actionToggle}>Login now</span>
       </p>
-      <form className={classes.formContainer} onSubmit={handleSignup}>
+      <form
+        id="form-signup"
+        className={classes.formContainer}
+        onSubmit={handleSignup}
+      >
         <label htmlFor="email">Email:</label>
         <input
           ref={signupEmailRef}
@@ -62,9 +63,8 @@ const Signup = (props) => {
           placeholder="Re-enter your Password"
           id="passwordConfirm"
         />
-        <ButtonPrimary text="Sign up" />
+        <ButtonPrimary text="Sign up" type="submit" form="form-signup" />
       </form>
-
     </div>
   );
 };

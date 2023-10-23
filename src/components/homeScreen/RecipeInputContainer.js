@@ -110,7 +110,7 @@ const RecipeInputContainer = (props) => {
         const jsonResponse = JSON.parse(resultRef.current);
         handleRecipe(jsonResponse);
       } catch (err) {
-        console.log(err);
+        
         alert(err);
       }
     }

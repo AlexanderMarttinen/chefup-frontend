@@ -5,10 +5,10 @@ import ImgClose from '../../assets/icons/icon-notification-x.png'
 const Notification = (props) =>{
     return(
         <div className={classes.notificationContainer}>
-            <img width={14}  height ={14} src={ImgInfo} />
+            <img width={14}  height ={14} src={ImgInfo} alt="info icon"/>
             <p>{props.text}</p>
             <button className={classes.btnNotificationPrimary}> {props.buttonText}</button>
-            <button className={classes.btnNotificationClose}> <img width={24}src={ImgClose}/> </button>
+            <button className={classes.btnNotificationClose}> <img width={24}src={ImgClose} alt="close icon"/> </button>
         </div>
     )
 }

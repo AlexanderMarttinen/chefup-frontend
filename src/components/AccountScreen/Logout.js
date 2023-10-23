@@ -14,8 +14,8 @@ const Logout = (props) => {
         Currently signed in with:
         <span style={{ cursor: "default" }}>{props.user}</span>
       </p>
-      <form className={classes.formContainer} onSubmit={props.logoutUser}>
-        <ButtonPrimary text="Log out" />
+      <form className={classes.formContainer} onSubmit={props.logoutUser} id="form-logout">
+        <ButtonPrimary text="Log out" type="submit" form="form-logout" />
       </form>
     </div>
   );

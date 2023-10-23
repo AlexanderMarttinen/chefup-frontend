@@ -10,17 +10,17 @@ const LoadingModalContents = (props) =>{
           <p>Loading Recipe</p>
           <Lottie className={classes.loadingLottie} animationData={ImgLoadingLottie} />
           <div className= {`loadingStage ${props.findRecipe.class}`} >
-            <img src={props.findRecipe.class==='stageFound' ? ImgCheckFilled : ImgLoading } width={14} />
+            <img src={props.findRecipe.class==='stageFound' ? ImgCheckFilled : ImgLoading } width={14} alt={props.findRecipe.class==='stageFound' ? "checkmark icon" : "loading spinner" } />
             <p className={props.findRecipe.class} >{props.findRecipe.message}</p>
           </div>
 
           <div className= {`loadingStage ${props.findIngredients.class}`} >
-            <img src={props.findIngredients.class==='stageFound' ? ImgCheckFilled : ImgLoading }  width={14} />
+            <img src={props.findIngredients.class==='stageFound' ? ImgCheckFilled : ImgLoading }  width={14} alt={props.findRecipe.class==='stageFound' ? "checkmark icon" : "loading spinner" }  />
             <p className={props.findIngredients.class} >{props.findIngredients.message}</p>
           </div>
 
           <div className= {`loadingStage ${props.findSteps.class}`} >
-            <img src={props.findSteps.class==='stageFound' ? ImgCheckFilled : ImgLoading } width={14} />
+            <img src={props.findSteps.class==='stageFound' ? ImgCheckFilled : ImgLoading } width={14} alt={props.findRecipe.class==='stageFound' ? "checkmark icon" : "loading spinner" }  />
             <p>{props.findSteps.message}</p>
           </div>
         </div>

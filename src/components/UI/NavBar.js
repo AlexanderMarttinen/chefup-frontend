@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import classes from "./Navbar.module.css";
 import ImgHome from "../../assets/icons/home-fill.svg";
 import ImgAccount from "../../assets/icons/account-fill.svg";
@@ -8,32 +8,49 @@ import { useRef } from "react";
 import { useContext } from "react";
 import UserContext from "../../store/user-context";
 import { supabase } from "../../utils/supabase";
+
 const NavBar = (props) => {
   const navigate = useNavigate();
   const homeLink = useRef(null);
   const userCtx = useContext(UserContext);
 
-
   const getSignedInState = async () => {
-    console.log("getting logged in state")
+   
     const { data, error } = await supabase.auth.getSession();
     if (data.session !== null) {
-        userCtx.setSignedInUser(data.session.user);
-        
+      userCtx.setSignedInUser(data.session.user);
     }
   };
+  
   useEffect(() => {
-   
+    setTab();
     getSignedInState();
   }, []);
-  
+
   const navClickHandler = (identifier, value) => {
+   
     if (identifier === "home") {
       navigate("/");
     } else if (identifier === "saved") {
       navigate("/saved");
     } else {
       navigate("/account");
+    }
+    setTab();
+  };
+  const setTab = () => {
+    const path = window.location.hash.split("/")[1];
+  
+    switch (path) {
+      case "saved":
+        userCtx.setActiveTab("saved");
+        break;
+      case "account":
+        userCtx.setActiveTab("account");
+        break;
+      case "":
+        userCtx.setActiveTab("home");
+        break;
     }
   };
 
@@ -48,7 +65,7 @@ const NavBar = (props) => {
             : classes.navItem
         }
       >
-        <img src={ImgHome} />
+        <img src={ImgHome} alt="home logo" />
         <p>Home</p>
       </div>
 
@@ -60,7 +77,7 @@ const NavBar = (props) => {
             : classes.navItem
         }
       >
-        <img src={ImgSaved} />
+        <img src={ImgSaved} alt="bookmark logo" />
         <p>Saved Recipes</p>
       </div>
 
@@ -72,8 +89,8 @@ const NavBar = (props) => {
             : classes.navItem
         }
       >
-        <img src={ImgAccount} />
-        <p>{userCtx.signedIn!== null ? "Log out" : "Login/Sign Up"}</p>
+        <img src={ImgAccount} alt="account logo" />
+        <p>{userCtx.signedIn !== null ? "Log out" : "Login/Sign Up"}</p>
       </div>
     </div>
   );

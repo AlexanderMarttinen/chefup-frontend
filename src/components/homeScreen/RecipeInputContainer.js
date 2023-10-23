@@ -6,6 +6,7 @@ import Modal from "../UI/Modal";
 import { useNavigate } from "react-router-dom";
 import LoadingModalContents from "./LoadingModalContents";
 import { supabase } from "../../utils/supabase";
+import ImgWand from '../../assets/icons/wand-white.png'
 const RecipeInputContainer = (props) => {
   //DECLARE STATE
   const [recipeSearchTerm, setReceipeSearchTerm] = useState("");
@@ -109,7 +110,7 @@ const RecipeInputContainer = (props) => {
         const jsonResponse = JSON.parse(resultRef.current);
         handleRecipe(jsonResponse);
       } catch (err) {
-        console.log(err);
+        
         alert(err);
       }
     }
@@ -132,7 +133,7 @@ const RecipeInputContainer = (props) => {
       />
       <ButtonPrimaryIcon
         handleClick={generateRecipe}
-        src="https://uploads-ssl.webflow.com/651eba29a68fbf41da558a48/651ebba44620e0b95f93a448_wand-green.png"
+        src={ImgWand}
         alt="magic wand icon"
         text="Get the Recipe"
       />

@@ -6,12 +6,16 @@ import UserContext from "../../store/user-context";
 
 const Saved = (props) => {
   
-  const savedRecipesLocalStorage = JSON.parse(
+  let savedRecipesLocalStorage = JSON.parse(
     localStorage.getItem("savedRecipes")
-  );
+  ); 
+  if (savedRecipesLocalStorage ===null){
+    savedRecipesLocalStorage =[]
+  }
+  const [localStorageSavedRecipes, setLocalStorageSavedRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
-
-
+  
+    
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
@@ -21,8 +25,8 @@ const Saved = (props) => {
   async function getSavedRecipes() {
     if (userCtx.signedIn !== null) {
       const { data, error } = await supabase.from("saved").select();
-      if(error!==null){
-        alert(error)
+      if(error){
+        console.log("error", error)
       }
       //QUESTION: useEffect will run in an infite loop without this if statement, because my state is continually replaced with 'data' and array that is idential to the current state. is there a better way to prevent state from being updated with an identical new state?
       if (JSON.stringify(data) !== JSON.stringify(savedRecipes)) {
@@ -35,7 +39,7 @@ const Saved = (props) => {
       const { data, error } = await supabase
         .from("recipes")
         .select()
-        .in("id", savedRecipesLocalStorage);
+        .in("id", localStorageSavedRecipes);
       if (error !== null) {
         alert(error);
       }

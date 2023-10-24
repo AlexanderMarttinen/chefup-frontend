@@ -8,7 +8,7 @@ const Signup = (props) => {
   const signupPasswordConfirmRef = useRef(null);
   const handleSignup = (event) => {
     event.preventDefault();
-
+    console.log("handle signup")
     if (
       signupPasswordRef.current.value !== signupPasswordConfirmRef.current.value
     ) {

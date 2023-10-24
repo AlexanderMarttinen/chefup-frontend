@@ -1,12 +1,15 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext,useEffect } from "react";
 import { supabase } from "../../utils/supabase";
 import UserContext from "../../store/user-context";
 import Logout from "./Logout";
 import Login from "./Login";
 import Signup from "./Signup";
+import Sent from "./Sent";
+
 const Account = (props) => {
   const [userLoginToggle, setUserLoginToggle] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const userCtx = useContext(UserContext);
 
   async function createUser(email, password) {
@@ -14,6 +17,7 @@ const Account = (props) => {
       email: email,
       password: password,
     });
+    setEmailSent(true);
   }
   async function logoutUserHandler(event) {
     event.preventDefault();
@@ -36,12 +40,20 @@ const Account = (props) => {
 
   return (
     <>
-      {userCtx.signedIn !== null ? (
-        <Logout user={userCtx.signedIn.email} logoutUser={logoutUserHandler} />
-      ) : userLoginToggle ? (
-        <Login actionToggle={userActionToggleHandler} login={loginUser} />
+      {emailSent ? (
+        <Sent />
       ) : (
-        <Signup signup={createUser} actionToggle={userActionToggleHandler} />
+        userCtx.signedIn !== null ? (
+          <Logout
+            user={userCtx.signedIn.email}
+            logoutUser={logoutUserHandler}
+          />
+        ) : userLoginToggle ? (
+          <Login actionToggle={userActionToggleHandler} login={loginUser} />
+        ) : (
+          <Signup signup={createUser} actionToggle={userActionToggleHandler} />
+        )
+        
       )}
     </>
   );
